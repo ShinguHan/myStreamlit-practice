@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import time as tm
 
 st.markdown("""
 <style>
@@ -84,3 +85,9 @@ st.write(date)
 
 time = st.time_input("When??", step=60)
 st.write(time)
+
+pb = st.progress(0)
+
+for i in range(10):
+    pb.progress((i+1)*10)
+    tm.sleep(1)
