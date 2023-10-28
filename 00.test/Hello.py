@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import time as tm
+from matplotlib import pyplot as plt
+import numpy as np
 
 st.markdown("""
 <style>
@@ -88,6 +90,52 @@ st.write(time)
 
 pb = st.progress(0)
 
-for i in range(10):
-    pb.progress((i+1)*10)
-    tm.sleep(1)
+# for i in range(10):
+#     pb.progress((i+1)*10)
+#     tm.sleep(1)
+
+st.markdown("<h1 style='text-align:center;'>User Registration</h1>",unsafe_allow_html=True)
+with st.form('form1', clear_on_submit=True):
+    col1, col2 = st.columns(2)
+    f_name = col1.text_input("First Name")
+    s_name = col2.text_input("Second Name")
+    st.text_input("Email Address")
+    st.text_input("Password")
+    st.text_input("Confirm Password")
+    day, month, year = st.columns(3)
+    day.text_input("Day")
+    month.text_input("Month")
+    year.text_input("Year")
+    state = st.form_submit_button("Submit")
+
+    if state:
+        if f_name == "" or s_name == "":
+            st.warning("Please fill above fileds")
+        else:
+            st.success("Submitted Successfully")
+
+st.sidebar.write("Hello this is my sidebar")
+
+opt = st.sidebar.radio("Select Any Graph", options=("Line","Bar", "H-Bar"))
+
+x = np.linspace(0,10,100)
+
+if opt == "Line":
+    st.markdown("<h1 style='text-align:center;'>Line Chart</h1>", unsafe_allow_html=True)
+    fig = plt.figure()
+    plt.style.use("https://github.com/dhaitz/matplotlib-stylesheets/raw/master/pitayasmoothie-dark.mplstyle")
+    plt.plot(x, np.sin(x))
+    plt.plot(x, np.cos(x), "--")
+    st.write(fig)
+elif opt == "Bar":
+    st.markdown("<h1 style='text-align:center;'>Bar Chart</h1>", unsafe_allow_html=True)
+    fig = plt.figure()
+    plt.style.use("https://github.com/dhaitz/matplotlib-stylesheets/raw/master/pitayasmoothie-dark.mplstyle")
+    plt.bar(x, x*10)
+    st.write(fig)
+elif opt == "H-Bar":
+    st.markdown("<h1 style='text-align:center;'>H-Bar Chart</h1>", unsafe_allow_html=True)
+    fig = plt.figure()
+    plt.style.use("https://github.com/dhaitz/matplotlib-stylesheets/raw/master/pitayasmoothie-dark.mplstyle")
+    plt.barh(x, x*10)
+    st.write(fig)
